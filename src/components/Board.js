@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import Square from './Square';
 import '../index.css';
 
+
 const Board = () => {
 
     const [ticTacToeBoard, setTicTacToeBoard] = useState(Array(9).fill(null));
     const [signX, setSignX] = useState(true);
-
-    const winner = calculateWinner(ticTacToeBoard);
+    const data = [0, 1, 2];
+    const boardDimension = 3;
+   
+    const winner = calculateWinner();
     let status;
 
     if (winner === 'Draw') {
@@ -15,7 +18,6 @@ const Board = () => {
     } else if (winner) {
         status = 'Winner: ' + winner;
     } else {
-
         status = 'Player Turn: ' + (signX ? 'X' : 'O');
     }
 
@@ -29,7 +31,6 @@ const Board = () => {
         } else {
             alert("Can't do that")
         }
-
     }
 
     const renderSquare = (i) => {
@@ -38,8 +39,7 @@ const Board = () => {
         )
     }
 
-    function calculateWinner(squares) {
-
+    function calculateWinner() {
         const lines = [
             [0, 1, 2],
             [3, 4, 5],
@@ -70,27 +70,27 @@ const Board = () => {
         setSignX(true);
     }
 
+  
+
     return (
         <div className="board">
-            <div className="board-row">
-                {renderSquare(0)}
-                {renderSquare(1)}
-                {renderSquare(2)}
-            </div>
-            <div className="board-row">
-                {renderSquare(3)}
-                {renderSquare(4)}
-                {renderSquare(5)}
-            </div>
-            <div className="board-row">
-                {renderSquare(6)}
-                {renderSquare(7)}
-                {renderSquare(8)}
-            </div>
+           
+            
+            {
+                data.map((row) => (
+                    <div className="board-row">{
+                        data.map((col) =>
+                            renderSquare(row * boardDimension + col)
+                        )}
+                    </div>
+                )
+                )
+            }
 
             <h3>{status}</h3>
 
             <button className="reset-btn" onClick={resetButtonClick}>Reset Game</button>
+            
         </div>
     )
 }
